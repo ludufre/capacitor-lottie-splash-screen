@@ -4,13 +4,11 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.util.Log;
-
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
-
 import java.util.Objects;
 
 /**
@@ -18,6 +16,7 @@ import java.util.Objects;
  */
 @CapacitorPlugin(name = "LottieSplashScreen")
 public class LottieSplashScreenPlugin extends Plugin {
+
     private final LottieSplashScreen implementation = new LottieSplashScreen();
     public static boolean isEnabledStatic = true;
 
@@ -135,14 +134,12 @@ public class LottieSplashScreenPlugin extends Plugin {
      *
      * @return true if dark mode is enabled
      */
-    private boolean isDarkMode(){
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-        return false;
+    private boolean isDarkMode() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            return false;
         }
 
-        int nightModeFlags =
-                getContext().getResources().getConfiguration().uiMode &
-                        Configuration.UI_MODE_NIGHT_MASK;
+        int nightModeFlags = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         return switch (nightModeFlags) {
             case Configuration.UI_MODE_NIGHT_YES -> true;
             case Configuration.UI_MODE_NIGHT_NO -> false;

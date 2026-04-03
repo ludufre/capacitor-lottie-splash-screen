@@ -15,4 +15,4 @@ include ':capacitor-status-bar'
 project(':capacitor-status-bar').projectDir = new File('../node_modules/@capacitor/status-bar/android')
 
 include ':capacitor-lottie-splash-screen'
-project(':capacitor-lottie-splash-screen').projectDir = new File('../node_modules/capacitor-lottie-splash-screen/android')
+project(':capacitor-lottie-splash-screen').projectDir = new File('../../android')

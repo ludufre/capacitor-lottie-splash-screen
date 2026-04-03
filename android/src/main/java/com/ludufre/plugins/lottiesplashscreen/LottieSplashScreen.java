@@ -11,10 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.capacitor.lottie.R;
@@ -27,19 +25,20 @@ public class LottieSplashScreen {
     /**
      * Interface for listening to animation events (e.g. onAnimationEnd).
      */
-    interface AnimationEventListener{
+    interface AnimationEventListener {
         void onAnimationEvent(String event);
     }
 
     @Nullable
     AnimationEventListener animationEventListener;
+
     private boolean isAppLoaded = false;
     private boolean autoHide = false;
     private boolean loopMode = false;
     private String backgroundColor;
-    final public static String TAG = "Lottie-Splash-Screen:";
+    public static final String TAG = "Lottie-Splash-Screen:";
     private boolean isAnimationEnded = !LottieSplashScreenPlugin.isEnabledStatic;
-    final public static String ON_ANIMATION_END = "onAnimationEnd";
+    public static final String ON_ANIMATION_END = "onAnimationEnd";
     private LottieAnimationView lottieAnimationView;
 
     Dialog dialog = null;
@@ -56,7 +55,7 @@ public class LottieSplashScreen {
      */
     public void onAppLoaded() {
         isAppLoaded = true;
-        if(isAnimationEnded || loopMode){
+        if (isAnimationEnded || loopMode) {
             hideDialog();
         }
     }
@@ -88,7 +87,13 @@ public class LottieSplashScreen {
      * @param autoHide        Whether to hide the splash automatically when animation ends
      * @param loopAnimation   Whether to loop the Lottie animation
      */
-    public void ShowLottieSplashScreenDialog(Context context, String lottiePath, String backgroundColor, boolean autoHide, boolean loopAnimation) {
+    public void ShowLottieSplashScreenDialog(
+        Context context,
+        String lottiePath,
+        String backgroundColor,
+        boolean autoHide,
+        boolean loopAnimation
+    ) {
         new Handler(Looper.getMainLooper()).post(() -> {
             this.autoHide = autoHide;
             this.loopMode = loopAnimation;
@@ -126,34 +131,32 @@ public class LottieSplashScreen {
         lottieAnimationView.setSpeed(1F);
         lottieAnimationView.playAnimation();
         lottieAnimationView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        lottieAnimationView.addAnimatorListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(@NonNull Animator animator) {
-                Log.i("LOG", "Check");
-            }
-
-            @Override
-            public void onAnimationEnd(@NonNull Animator animation) {
-                try {
-                    isAnimationEnded = true;
-                    animationEventListener.onAnimationEvent(ON_ANIMATION_END);
-                    if (isAppLoaded || autoHide) {
-                        hideDialog();
-                    }
-                } catch (Exception ex) {
-                    ex.toString();
+        lottieAnimationView.addAnimatorListener(
+            new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(@NonNull Animator animator) {
+                    Log.i("LOG", "Check");
                 }
-            }
 
-            @Override
-            public void onAnimationCancel(@NonNull Animator animator) {
-            }
+                @Override
+                public void onAnimationEnd(@NonNull Animator animation) {
+                    try {
+                        isAnimationEnded = true;
+                        animationEventListener.onAnimationEvent(ON_ANIMATION_END);
+                        if (isAppLoaded || autoHide) {
+                            hideDialog();
+                        }
+                    } catch (Exception ex) {
+                        ex.toString();
+                    }
+                }
 
-            @Override
-            public void onAnimationRepeat(@NonNull Animator animator) {
-            }
+                @Override
+                public void onAnimationCancel(@NonNull Animator animator) {}
 
-        });
+                @Override
+                public void onAnimationRepeat(@NonNull Animator animator) {}
+            }
+        );
     }
-
 }

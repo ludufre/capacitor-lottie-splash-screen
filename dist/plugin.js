@@ -20,7 +20,7 @@ var LottieSplashScreen = (function (exports, core) {
          *
          * @returns A Promise that resolves to the `LottieSplashScreenWeb` implementation.
          */
-        web: () => Promise.resolve().then(function () { return web; }).then(m => new m.LottieSplashScreenWeb()),
+        web: () => Promise.resolve().then(function () { return web; }).then((m) => new m.LottieSplashScreenWeb()),
     });
 
     /**
