@@ -19,29 +19,29 @@ public class LottieSplashScreenPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "hide", returnType: CAPPluginReturnNone),
         CAPPluginMethod(name: "show", returnType: CAPPluginReturnNone),
         CAPPluginMethod(name: "appLoaded", returnType: CAPPluginReturnNone),
-        CAPPluginMethod(name: "isAnimating", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "isAnimating", returnType: CAPPluginReturnPromise)
     ]
     public static var isEnabledStatic = true
     private let implementation = LottieSplashScreen()
 
     /// JS → Native: Show the splash screen again
     @objc func show(_ call: CAPPluginCall) {
-        let animationOverride = call.getString("animation");
-        let isDarkModeOverride: NSNumber? = call.getBool("isDarkMode").map { NSNumber(value: $0) };
-        implementation.show(animationOverride: animationOverride, isDarkModeOverride: isDarkModeOverride);
-        call.resolve();
+        let animationOverride = call.getString("animation")
+        let isDarkModeOverride: NSNumber? = call.getBool("isDarkMode").map { NSNumber(value: $0) }
+        implementation.show(animationOverride: animationOverride, isDarkModeOverride: isDarkModeOverride)
+        call.resolve()
     }
 
     /// JS → Native: Hide the splash screen immediately
     @objc func hide(_ call: CAPPluginCall) {
-        implementation.hide();
-        call.resolve();
+        implementation.hide()
+        call.resolve()
     }
 
     /// JS → Native: Notify the plugin that the app has loaded
     @objc func appLoaded(_ call: CAPPluginCall) {
         implementation.onAppLoaded()
-        call.resolve();
+        call.resolve()
     }
 
     /// Plugin lifecycle hook called after plugin is loaded
@@ -51,9 +51,9 @@ public class LottieSplashScreenPlugin: CAPPlugin, CAPBridgedPlugin {
             return
         }
         let isEnabled = getConfig().getBoolean("enabled", true)
-        
+
         log("Started")
-        
+
         if isEnabled {
             let animationLight = getConfig().getString("animationLight", "")
             if animationLight == "" {
@@ -102,5 +102,5 @@ public class LottieSplashScreenPlugin: CAPPlugin, CAPBridgedPlugin {
             "isAnimating": implementation.isAnimating()
         ])
     }
-    
+
 }

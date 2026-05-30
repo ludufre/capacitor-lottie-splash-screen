@@ -14,7 +14,7 @@ export class HomePage {
   protected showSplashScreen(): void {
     const options: LottieSplashScreenShowOptions = {
       animation: 'public/assets/lottie-runtime.json',
-      isDarkMode: true
+      isDarkMode: true,
     };
     LottieSplashScreen.show(options);
   }

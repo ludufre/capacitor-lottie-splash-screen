@@ -33,9 +33,9 @@ extension AnimationEventListener {
     private var animationView: LottieAnimationView?
     private var isAppLoaded = false
     private var isAnimationEnded = !LottieSplashScreenPlugin.isEnabledStatic
-    private var autoHide = false;
-    private var loopMode = LottieLoopMode.playOnce;
-    
+    private var autoHide = false
+    private var loopMode = LottieLoopMode.playOnce
+
     // Store parameters to allow re-showing the splash screen
     private var backgroundView: UIView?
     private var containerView: UIView?
@@ -48,11 +48,11 @@ extension AnimationEventListener {
     private var backgroundColorDark: UIColor?
 
     public typealias AnimationEventListenerCallback = (AnimationEventListener) -> Void
-    
+
     @objc public var onAnimationEvent: AnimationEventListenerCallback?
 
     // MARK: - Public API
-    
+
     /// Check whether the splash animation is currently active
     public func isAnimating() -> Bool {
         return !isAnimationEnded
@@ -86,17 +86,17 @@ extension AnimationEventListener {
     }
 
     /// Hide the splash screen immediately
-    @objc public func hide() -> Void {
+    @objc public func hide() {
         hideSplashScreen()
     }
-    
+
     /// Show the splash screen with optional animation override and without dark mode override
-    @objc public func show(animationOverride: String?) -> Void {
+    @objc public func show(animationOverride: String?) {
         self.show(animationOverride: animationOverride, isDarkModeOverride: nil)
     }
 
     /// Show the splash screen with optional animation and dark mode overrides
-    @objc public func show(animationOverride: String?, isDarkModeOverride: NSNumber?) -> Void {
+    @objc public func show(animationOverride: String?, isDarkModeOverride: NSNumber?) {
         DispatchQueue.main.async {
             let useDarkMode = isDarkModeOverride?.boolValue ?? self.isSystemDarkMode()
 
@@ -132,7 +132,7 @@ extension AnimationEventListener {
             self.backgroundView!.backgroundColor = self.backgroundColor
             self.backgroundView!.frame = UIScreen.main.bounds
             containerView.addSubview(self.backgroundView!)
-            
+
             // Set up Lottie animation
             self.animationView = .init(name: filename)
             self.animationView!.frame = UIScreen.main.bounds
@@ -141,12 +141,12 @@ extension AnimationEventListener {
             self.animationView!.animationSpeed = 1
             self.animationView!.translatesAutoresizingMaskIntoConstraints = false
             self.backgroundView!.addSubview(self.animationView!)
-            
+
             NSLayoutConstraint.activate([
                 self.animationView!.widthAnchor.constraint(equalTo: self.backgroundView!.widthAnchor),
                 self.animationView!.heightAnchor.constraint(equalTo: self.backgroundView!.heightAnchor)
             ])
-            
+
             self.animationView!.play { completed in
                 if completed || (!completed && self.loopMode == .loop) {
                     self.isAnimationEnded = true
@@ -178,9 +178,9 @@ extension AnimationEventListener {
     }
 
     private static func color(fromHex hex: String) -> UIColor {
-        var c = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-        if c.hasPrefix("#") { c.removeFirst() }
-        guard c.count == 6, let rgb = Int(c, radix: 16) else { return .white }
+        var hexColor = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        if hexColor.hasPrefix("#") { hexColor.removeFirst() }
+        guard hexColor.count == 6, let rgb = Int(hexColor, radix: 16) else { return .white }
         return UIColor(
             red: CGFloat((rgb >> 16) & 0xFF) / 255.0,
             green: CGFloat((rgb >> 8) & 0xFF) / 255.0,

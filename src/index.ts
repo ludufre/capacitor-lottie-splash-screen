@@ -21,7 +21,7 @@ const LottieSplashScreen = registerPlugin<LottieSplashScreenPlugin>('LottieSplas
    *
    * @returns A Promise that resolves to the `LottieSplashScreenWeb` implementation.
    */
-  web: () => import('./web').then(m => new m.LottieSplashScreenWeb()),
+  web: () => import('./web').then((m) => new m.LottieSplashScreenWeb()),
 });
 
 /**
